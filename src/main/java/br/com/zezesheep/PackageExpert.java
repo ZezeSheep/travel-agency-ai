@@ -3,6 +3,7 @@ package br.com.zezesheep;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.service.guardrail.InputGuardrails;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import io.quarkiverse.langchain4j.mcp.runtime.McpToolBox;
 
@@ -18,5 +19,6 @@ public interface PackageExpert {
             'Desculpe, mas não tenho informações sobre isso. Posso ajudar com mais algum dúvida sobre nossos pacotes?'
             """)
     @McpToolBox("booking-server")
+    @InputGuardrails(InjectionGuard.class)
     String chat(@MemoryId String memoryId, @UserMessage String userMessage);
 }

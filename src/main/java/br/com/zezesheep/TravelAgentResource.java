@@ -1,10 +1,7 @@
 package br.com.zezesheep;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/travel")
@@ -16,7 +13,13 @@ public class TravelAgentResource {
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String ask(String userMessage) {
-        return expert.chat("session-123",userMessage);
+    public String ask(String userMessage, @HeaderParam("X-User-Name") String userName) {
+        if(userName != null && !userName.isBlank()){
+            SecurityContext.setCurrentUser(userName);
+            return expert.chat(userName,userMessage);
+        }
+        else{
+            return "Usuário precisa estar logado para usar o chat.";
+        }
     }
 }

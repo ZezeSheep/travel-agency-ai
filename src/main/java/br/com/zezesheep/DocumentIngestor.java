@@ -32,7 +32,7 @@ public class DocumentIngestor {
 
         document.metadata().put("type","packages");
 
-        DocumentSplitter splitter = DocumentSplitters.recursive(200,20);
+        DocumentSplitter splitter = DocumentSplitters.recursive(100,20);
 
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
                 .documentSplitter(splitter)
